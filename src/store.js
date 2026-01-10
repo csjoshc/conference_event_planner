@@ -8,5 +8,6 @@ export default configureStore({
     // global react state venue is mapped to
     venue: venueReducer,
     av: avReducer,
+    meals: mealsReducer,
   },
 });
