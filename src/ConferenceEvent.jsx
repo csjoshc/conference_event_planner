@@ -6,7 +6,7 @@ import { incrementQuantity, decrementQuantity } from "./venueSlice";
 import { incrementAvQuantity, decrementAvQuantity } from "./avSlice";
 import { toggleMealSelection } from "./mealsSlice";
 const ConferenceEvent = () => {
-const [showItems, setShowItems] = useState(false);
+  const [showItems, setShowItems] = useState(false);
   const [numberOfPeople, setNumberOfPeople] = useState(1);
   const venueItems = useSelector((state) => state.venue);
   const avItems = useSelector((state) => state.av);
@@ -87,39 +87,42 @@ const [showItems, setShowItems] = useState(false);
 
   const ItemsDisplay = ({ items }) => {
     console.log(items);
-    return <>
+    return (
+      <>
         <div className="display_box1">
-            {items.length === 0 && <p>No items selected</p>}
-            <table className="table_item_data">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Unit Cost</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {items.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.name}</td>
-                            <td>${item.cost}</td>
-                            <td>
-                                {item.type === "meals" || item.numberOfPeople
-                                ? ` For ${numberOfPeople} people`
-                                : item.quantity}
-                            </td>
-                            <td>{item.type === "meals" || item.numberOfPeople
-                                ? `${item.cost * numberOfPeople}`
-                                : `${item.cost * item.quantity}`}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+          {items.length === 0 && <p>No items selected</p>}
+          <table className="table_item_data">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Unit Cost</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.name}</td>
+                  <td>${item.cost}</td>
+                  <td>
+                    {item.type === "meals" || item.numberOfPeople
+                      ? ` For ${numberOfPeople} people`
+                      : item.quantity}
+                  </td>
+                  <td>
+                    {item.type === "meals" || item.numberOfPeople
+                      ? `${item.cost * numberOfPeople}`
+                      : `${item.cost * item.quantity}`}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-    </>
-};
+      </>
+    );
+  };
   const calculateTotalCost = (section) => {
     let totalCost = 0;
     if (section === "venue") {
@@ -142,11 +145,11 @@ const [showItems, setShowItems] = useState(false);
   const venueTotalCost = calculateTotalCost("venue");
   const avTotalCost = calculateTotalCost("av");
   const mealsTotalCost = calculateTotalCost("meals");
-    const totalCosts = {
-        venue: venueTotalCost,
-        av: avTotalCost,
-        meals: mealsTotalCost,
-    };
+  const totalCosts = {
+    venue: venueTotalCost,
+    av: avTotalCost,
+    meals: mealsTotalCost,
+  };
   const navigateToProducts = (idType) => {
     if (idType == "#venue" || idType == "#addons" || idType == "#meals") {
       if (showItems) {
@@ -342,8 +345,11 @@ const [showItems, setShowItems] = useState(false);
           </div>
         ) : (
           <div className="total_amount_detail">
-    <TotalCost totalCosts={ totalCosts } ItemsDisplay={() => <ItemsDisplay items={ items } />} />
-</div>
+            <TotalCost
+              totalCosts={totalCosts}
+              ItemsDisplay={() => <ItemsDisplay items={items} />}
+            />
+          </div>
         )}
       </div>
     </>
